@@ -14,6 +14,13 @@ spec:
     image: hashicorp/terraform
     name: terraform'''
 
+tfvars = '''
+ami_id="ami-092b51d9008adea15"
+instance_type="t2.micro"
+az1="us-east-2a"
+key_pair="my-laptop-key"
+'''
+
 
 podTemplate(cloud: 'kubernetes', label: 'terraform', showRawYaml: false, yaml: template){
     node("terraform"){
@@ -27,7 +34,8 @@ podTemplate(cloud: 'kubernetes', label: 'terraform', showRawYaml: false, yaml: t
 
 withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
         stage("Terraform Apply"){
-      sh 'terraform apply --auto-approve'
+          writeFile file: 'hello.tfvars', text: tfvars
+      sh 'terraform apply -var-file hello.tfvars --auto-approve'
     }
 }
 
@@ -35,13 +43,3 @@ withCredentials([usernamePassword(credentialsId: 'aws-creds', passwordVariable: 
     
 }
 }
-
-
-
-
-
-
-
-
-
-
