@@ -22,6 +22,11 @@ variable key_pair {
   description = "Proved key pair name"
 }
 
+variable region {
+  type        = string
+  default     = ""
+  description = "Proved region"
+}
 
 # variable ami_id {
 #   type        = string
