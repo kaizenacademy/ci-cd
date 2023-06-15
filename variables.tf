@@ -34,7 +34,7 @@ data "aws_ami" "ubuntu" {
     name   = "name"
     values = [var.ami_name]
   }
-  owners = ["099720109477"]
+  owners = ["self"]
 }
 
 # variable ami_id {
