@@ -28,6 +28,15 @@ variable region {
   description = "Proved region"
 }
 
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = [var.ami_name]
+  }
+  owners = ["099720109477"]
+}
+
 # variable ami_id {
 #   type        = string
 #   default     = "ami-092b51d9008adea15"
